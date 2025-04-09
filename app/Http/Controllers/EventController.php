@@ -28,7 +28,10 @@ class EventController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $event = Event::create($validator->validated());
+        $validated = $validator->validated();
+        $validated['user_id'] = $request->user()->id;
+
+        $event = Event::create($validated);
 
         return new EventResource($event);
     }
