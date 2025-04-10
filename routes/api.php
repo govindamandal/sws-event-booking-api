@@ -28,10 +28,13 @@ Route::apiResource('bookings', BookingController::class)->only([
     'index', 'store', 'destroy'
 ]);
 
+Route::apiResource('events', EventController::class)->only([
+    'index', 'store', 'show', 'update', 'destroy'
+]);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', function (Request $request) {
         return $request->user();
     });
-    Route::apiResource('events', EventController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
