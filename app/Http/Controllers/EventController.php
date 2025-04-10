@@ -9,9 +9,23 @@ use Illuminate\Support\Facades\Validator;
 
 class EventController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return EventResource::collection(Event::latest()->paginate(10));
+        $query = Event::query();
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where('title', 'like', '%' . $search . '%');
+        }
+
+        if ($request->has('date')) {
+            $query->whereDate('date', $request->get('date'));
+        }
+
+        $perPage = $request->get('limit', 10);
+        $events = $query->paginate($perPage);
+
+        return EventResource::collection($events);
     }
 
     public function store(Request $request)
