@@ -1,66 +1,155 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Booking Management API with Swagger (OpenAPI) Documentation
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a Laravel-based RESTful API with integrated Swagger (OpenAPI) documentation and Bearer Token authentication (JWT or Sanctum). Swagger UI provides a friendly interface to explore, test, and interact with the API.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Local Development Setup
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. Clone the Repository
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+git clone https://github.com/govindamandal/sws-event-booking-api.git
+cd sws-event-booking-api
+```
 
-## Learning Laravel
+### 2. Install Dependencies
+```bash
+composer install
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 3. Copy .env and Configure
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Edit .env and configure your DB connection and APP_URL (default: http://localhost:8000):
+```bash
+APP_URL=http://localhost:8000
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 4. Run Migrations
+```bash
+php artisan migrate
+```
 
-## Laravel Sponsors
+### 5. Serve the Project
+```bash
+php artisan serve
+```
+The Laravel Booking Management API app will now be available at: http://localhost:8000
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 📚 Swagger Documentation
 
-### Premium Partners
+This project uses __Swagger UI__ to generate interactive API documentation.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 🔧 Swagger Setup
+Swagger annotations are added using __OpenAPI 3.0__ and Laravel-compatible tools like `zircote/swagger-php` and `L5Swagger`.
 
-## Contributing
+### Generate Swagger Docs
+```bash
+php artisan l5-swagger:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+This will generate Swagger JSON at `storage/api-docs/api-docs.json`.
 
-## Code of Conduct
+### 📖 Access Swagger UI
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Once the docs are generated, visit: http://localhost:8000/api/documentation, This will open the Swagger UI where you can view and test all available API endpoints.
 
-## Security Vulnerabilities
+## 🔐 Authentication (Bearer Token)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+This API uses __Bearer Token (JWT or Sanctum)__ for protected routes.
 
-## License
+### Add Authorization Header in Swagger UI
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Login to the Auth Endpoint `/api/login`
+
+This will return the response like 
+
+```json
+{
+  "user": {
+    "id": 1,
+    "name": "Govinda Mandal",
+    "email": "govinda4india@gmail.com",
+    "email_verified_at": null,
+    "created_at": "2025-04-09T09:02:53.000000Z",
+    "updated_at": "2025-04-09T09:02:53.000000Z"
+  },
+  "token": "7|84OvT11aqpwxJbozfa4cxxwFI4fGzdaPdCxuODSh61675a91"
+}
+```
+
+2. Copy the token value, in this case `7|84OvT11aqpwxJbozfa4cxxwFI4fGzdaPdCxuODSh61675a91`
+3. Click the __Authorize__ button in Swagger UI.
+4. In the “Value” field, enter token copied (`7|84OvT11aqpwxJbozfa4cxxwFI4fGzdaPdCxuODSh61675a91`)
+5. Click “Authorize” and then “Close”.
+
+## 🧪 Sample Authentication Flow
+
+### 1. Register a new user
+```bash
+POST /api/register
+```
+Sample body:
+```json
+{
+  "name": "Govinda Mandal",
+  "email": "govinda4india@gmail.com",
+  "password": "Govinda@123",
+  "password_confirmation": "Govinda@123"
+}
+```
+
+### 2. Login to get Token
+
+```bash
+POST /api/login
+```
+Sample body
+```json
+{
+  "email": "govinda4india@gmail.com",
+  "password": "Govinda@123"
+}
+```
+Response:
+```json
+{
+  "user": {
+    "id": 1,
+    "name": "Govinda Mandal",
+    "email": "govinda4india@gmail.com",
+    "email_verified_at": null,
+    "created_at": "2025-04-09T09:02:53.000000Z",
+    "updated_at": "2025-04-09T09:02:53.000000Z"
+  },
+  "token": "3|8dfGxzuZFTmdk4W6hsYQD4OhV6rsxzdpAK9hNl5cb00846b3"
+}
+```
+
+## 🔄 Regenerating Swagger Docs After Any Code Changes
+
+```bash
+php artisan l5-swagger:generate
+```
+## 📦 Useful Commands
+
+	•	Serve app: `php artisan serve`
+	•	Generate Swagger docs: `php artisan l5-swagger:generate`
+	•	Clear config: `php artisan config:clear`
+
+## 🛠️ Technologies Used
+	•	Laravel 10+
+	•	L5-Swagger (OpenAPI 3)
+	•	Sanctum or JWT for authentication
+	•	MySQL or any DB of your choice
+
