@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\AttendeeController;
+use App\Http\Controllers\BookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,9 @@ Route::post('/login',    [AuthController::class, 'login']);
 
 Route::apiResource('attendees', AttendeeController::class)->only([
     'index', 'store', 'show', 'update', 'destroy'
+]);
+Route::apiResource('bookings', BookingController::class)->only([
+    'index', 'store', 'destroy'
 ]);
 
 Route::middleware('auth:sanctum')->group(function () {
